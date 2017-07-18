@@ -3,12 +3,14 @@ package com.udacity.classroom.popmovies;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.udacity.classroom.popmovies.fragment.MovieDetailFragment;
 import com.udacity.classroom.popmovies.fragment.MovieListFragment;
+import com.udacity.classroom.popmovies.fragment.SettingsFragment;
 import com.udacity.classroom.popmovies.interfaces.OnMovieSelectedListener;
 import com.udacity.classroom.popmovies.interfaces.SnackbarListener;
 import com.udacity.classroom.popmovies.model.Movie;
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements SnackbarListener,
         int id = item.getItemId();
         switch (id) {
             case R.id.action_settings :
+                showSettingsFragment();
                 return true;
             case android.R.id.home :
                 onBackPressed();
@@ -83,6 +86,13 @@ public class MainActivity extends AppCompatActivity implements SnackbarListener,
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    private void showSettingsFragment() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, new SettingsFragment())
                 .addToBackStack(null)
                 .commit();
     }

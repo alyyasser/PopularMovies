@@ -1,26 +1,27 @@
 package com.udacity.classroom.popmovies.fragment;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 
 import com.udacity.classroom.popmovies.R;
 import com.udacity.classroom.popmovies.adapter.MovieAdapter;
 import com.udacity.classroom.popmovies.api.ApiClient;
 import com.udacity.classroom.popmovies.api.ApiService;
-import com.udacity.classroom.popmovies.interfaces.SnackbarListener;
 import com.udacity.classroom.popmovies.interfaces.OnMovieSelectedListener;
+import com.udacity.classroom.popmovies.interfaces.SnackbarListener;
 import com.udacity.classroom.popmovies.model.Movie;
 import com.udacity.classroom.popmovies.model.MovieList;
 import com.udacity.classroom.popmovies.utils.InternetConnection;
@@ -36,6 +37,8 @@ import retrofit2.Response;
  */
 
 public class MovieListFragment extends Fragment {
+    private static String KEY_PREF_SORT_ORDER = "sort_preference";
+
     private Context context;
     private ArrayList<Movie> movies = new ArrayList<>();
 
@@ -92,8 +95,16 @@ public class MovieListFragment extends Fragment {
     private void getMovieList() {
         movieListSpinner.setVisibility(View.VISIBLE);
 
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        int pref = Integer.parseInt(sharedPrefs.getString(KEY_PREF_SORT_ORDER, "1"));
+
         ApiService service = ApiClient.getService();
-        Call<MovieList> call = service.getPopularMovies(ApiClient.API_KEY);
+        Call<MovieList> call = null;
+        if (pref == 1) {
+            call = service.getPopularMovies(ApiClient.API_KEY);
+        } else {
+            call = service.getTopRatedMovies(ApiClient.API_KEY);
+        }
 
         call.enqueue(new Callback<MovieList>() {
             @Override

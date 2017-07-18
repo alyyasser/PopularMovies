@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<android.support.v7.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-	<ListPreference
+	<android.support.v7.preference.ListPreference
 		android:defaultValue="1"
 		android:entries="@array/sort_order"
 		android:entryValues="@array/sort_order_value"
 		android:key="sort_preference"
 		android:title="Movies Sort Order"/>
-</PreferenceScreen>
+</android.support.v7.preference.PreferenceScreen>
