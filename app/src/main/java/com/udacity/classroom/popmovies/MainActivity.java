@@ -1,12 +1,14 @@
 package com.udacity.classroom.popmovies;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.udacity.classroom.popmovies.adapter.MovieAdapter;
@@ -22,7 +24,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
-    private View rootView;
+    public static String MOVIE_ID = "Movie ID";
+    public static String POSTER_PATH = "Poster Path";
+
+    private ArrayList<Movie> movies = new ArrayList<>();
+
     private GridView movieGrid;
 
     @Override
@@ -30,17 +36,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        rootView = findViewById(android.R.id.content);
-
         movieGrid = (GridView) findViewById(R.id.movies_grid);
+        movieGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                openMovieDetail(movies.get(position));
+            }
+        });
 
         if (!isOnline()) {
             showSnackbar(R.string.msg_no_internet, R.string.btn_text_try_again);
             return;
         }
 
-        Snackbar.make(rootView, R.string.msg_load_movies, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(findViewById(android.R.id.content), R.string.msg_load_list_movies, Snackbar.LENGTH_SHORT).show();
         getMovieList();
+    }
+
+    private void openMovieDetail(Movie movie) {
+        Intent intent = new Intent(this, MovieDetailActivity.class);
+        intent.putExtra(MOVIE_ID, movie.getMovieId());
+        intent.putExtra(POSTER_PATH, movie.getPosterPath());
+        startActivity(intent);
     }
 
     private void getMovieList() {
@@ -51,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<MovieList> call, Response<MovieList> response) {
                 if (response.isSuccessful()) {
-                    ArrayList<Movie> movies = response.body().getMovies();
+                    movies = response.body().getMovies();
                     MovieAdapter adapter = new MovieAdapter(getApplicationContext(), movies);
                     movieGrid.setAdapter(adapter);
                 } else {
@@ -65,14 +82,14 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<MovieList> call, Throwable t) {
-                showSnackbar(R.string.msg_load_failed, R.string.btn_text_try_again);
+                showSnackbar(R.string.msg_list_load_failed, R.string.btn_text_try_again);
             }
         });
 
     }
 
     private void showSnackbar(int warnText, int buttonText) {
-        Snackbar snackbar = Snackbar.make(rootView, warnText, Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), warnText, Snackbar.LENGTH_LONG);
         snackbar.setAction(buttonText, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
