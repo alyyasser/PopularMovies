@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string-array name="sort_order">
+		<item>Sort by Popular Movies</item>
+		<item>Sort by Top Rated Movies</item>
+	</string-array>
+	<integer-array name="sort_order_value">
+		<item>1</item>
+		<item>2</item>
+	</integer-array>
+</resources>
