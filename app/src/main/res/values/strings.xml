@@ -6,5 +6,9 @@
 	<string name="msg_something_wrong">Something went wrong…</string>
 	<string name="msg_list_load_failed">Failed loading Movie List…</string>
 	<string name="msg_detail_load_failed">Failed loading Movie Detail…</string>
-	<string name="btn_text_try_again">Try Again</string>
+	<string name="action_try_again">Try Again</string>
+	<string name="action_settings">Settings</string>
+	<string name="desc_movie_poster">Movie Poster</string>
+	<string name="text_movie_length">%1$s min</string>
+	<string name="text_movie_rating">%1$.1f/10</string>
 </resources>
