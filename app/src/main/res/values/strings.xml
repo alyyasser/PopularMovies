@@ -1,8 +1,8 @@
 <resources>
 	<string name="app_name">Popular Movies</string>
 	<string name="msg_no_internet">No Internet Connection</string>
-	<string name="msg_load_movies">Loading Movie List...</string>
-	<string name="msg_something_wrong">Something went wrong...</string>
-	<string name="msg_load_failed">Failed loading Movie List...</string>
+	<string name="msg_load_movies">Loading Movie List…</string>
+	<string name="msg_something_wrong">Something went wrong…</string>
+	<string name="msg_load_failed">Failed loading Movie List…</string>
 	<string name="btn_text_try_again">Try Again</string>
 </resources>
