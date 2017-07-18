@@ -8,7 +8,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class ApiClient {
-    public static final String API_KEY = "b48ceb020036b89222782f2087bfd2c8";
+    //TODO : Add TMDB Api Key here
+    public static final String API_KEY = "";
     public static final String BASE_POSTER_PATH = "http://image.tmdb.org/t/p/w185/";
 
     private static final String API_URL = "https://api.themoviedb.org/3/";
