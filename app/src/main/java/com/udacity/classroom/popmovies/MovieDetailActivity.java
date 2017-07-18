@@ -35,6 +35,8 @@ public class MovieDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         toolbar = (Toolbar) findViewById(R.id.movie_toolbar);
         ImageView poster = (ImageView) findViewById(R.id.movie_detail_poster);
         releaseDate = (TextView) findViewById(R.id.movie_release_date);
